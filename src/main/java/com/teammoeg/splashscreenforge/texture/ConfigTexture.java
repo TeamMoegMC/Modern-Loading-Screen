@@ -19,9 +19,11 @@ public class ConfigTexture extends SimpleTexture {
         super(location);
     }
 
+    @Override
     protected TextureData getTextureData(IResourceManager resourceManager) {
         try {
-            InputStream input = new FileInputStream(CONFIG_PATH+"/splashscreenforge/"+this.textureLocation.toString().replace("minecraft:",""));
+            System.out.println("TEXTURE_PATH: " + CONFIG_PATH + "/" + this.textureLocation.toString().replace("minecraft:", ""));
+            InputStream input = new FileInputStream(CONFIG_PATH + "/" + this.textureLocation.toString().replace("minecraft:", ""));
             TextureData texture;
 
             try {

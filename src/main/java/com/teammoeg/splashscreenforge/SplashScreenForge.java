@@ -1,6 +1,7 @@
 package com.teammoeg.splashscreenforge;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -29,14 +30,7 @@ public class SplashScreenForge {
 
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
-    public static File CONFIG_PATH;
-
-    private static Path BackgroundTexture = Paths.get(CONFIG_PATH + "/background.png");
-    private static Path MojangTexture = Paths.get(CONFIG_PATH + "/mojangstudios.png");
-    private static Path MojankTexture = Paths.get(CONFIG_PATH + "/mojank.png");
-    private static Path ProgressBarTexture = Paths.get(CONFIG_PATH + "/progressbar.png");
-    private static Path ProgressBarBackgroundTexture = Paths.get(CONFIG_PATH + "/progressbar_background.png");
-
+    public static File CONFIG_PATH = new File(Minecraft.getInstance().gameDir + "/splashscreenforge");
 
     public static ResourceLocation rl(String path) {
         return new ResourceLocation(path);
@@ -52,7 +46,7 @@ public class SplashScreenForge {
         MinecraftForge.EVENT_BUS.register(this);
 
         // Register config
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SplashConfig.clientSpec);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SplashConfig.CLIENT_CONFIG);
     }
 
     private void setup(final FMLCommonSetupEvent event) {
@@ -60,10 +54,19 @@ public class SplashScreenForge {
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
+        LOGGER.info("Customizing Splash Screen");
         // do something that can only be done on the client
-        CONFIG_PATH = new File(event.getMinecraftSupplier().get().gameDir + "/splashcreenforge");
+        System.out.println("CONFIG_PATH: " + CONFIG_PATH);
+        Path backgroundTexture = Paths.get(CONFIG_PATH + "/background.png");
+        Path mojangTexture = Paths.get(CONFIG_PATH + "/mojangstudios.png");
+        Path mojankTexture = Paths.get(CONFIG_PATH + "/mojank.png");
+        Path progressBarTexture = Paths.get(CONFIG_PATH + "/progressbar.png");
+        Path progressBarBackgroundTexture = Paths.get(CONFIG_PATH + "/progressbar_background.png");
+
         if (!CONFIG_PATH.exists()) { // Run when config directory is nonexistant //
             CONFIG_PATH.mkdir(); // Create our custom config directory //
+
+//            event.getMinecraftSupplier().get().getResourceManager().getResource(rl("background.png")).getInputStream();
 
             // Open Input Streams for copying the default textures to the config directory //
             InputStream background = Thread.currentThread().getContextClassLoader().getResourceAsStream("background.png");
@@ -73,11 +76,11 @@ public class SplashScreenForge {
             InputStream progressbarBG = Thread.currentThread().getContextClassLoader().getResourceAsStream("progressbar_background.png");
             try {
                 // Copy the default textures into the config directory //
-                Files.copy(background,BackgroundTexture, StandardCopyOption.REPLACE_EXISTING);
-                Files.copy(mojangstudios,MojangTexture,StandardCopyOption.REPLACE_EXISTING);
-                Files.copy(mojank,MojankTexture,StandardCopyOption.REPLACE_EXISTING);
-                Files.copy(progressbar,ProgressBarTexture,StandardCopyOption.REPLACE_EXISTING);
-                Files.copy(progressbarBG,ProgressBarBackgroundTexture,StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(background, backgroundTexture, StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(mojangstudios, mojangTexture, StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(mojank, mojankTexture, StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(progressbar, progressBarTexture, StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(progressbarBG, progressBarBackgroundTexture, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
                 e.printStackTrace();
             }

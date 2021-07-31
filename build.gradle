@@ -26,9 +26,10 @@ minecraft {
         client {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-            arg "-mixin.config=" + "splashscreenforge.mixins.json"
 
             workingDirectory project.file('run')
+
+            arg "-mixin.config=" + "splashscreenforge.mixins.json"
 
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
@@ -46,9 +47,10 @@ minecraft {
         server {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-            arg "-mixin.config=" + "splashscreenforge.mixins.json"
 
             workingDirectory project.file('run')
+
+            arg "-mixin.config=" + "splashscreenforge.mixins.json"
 
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
@@ -64,8 +66,13 @@ minecraft {
         }
 
         data {
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+
             workingDirectory project.file('run')
 
+            arg "-mixin.config=" + "splashscreenforge.mixins.json"
+            
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 

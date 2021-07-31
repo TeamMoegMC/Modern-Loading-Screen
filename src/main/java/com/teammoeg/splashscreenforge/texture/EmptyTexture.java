@@ -16,12 +16,13 @@ public class EmptyTexture extends SimpleTexture {
         super(location);
     }
 
+    @Override
     protected TextureData getTextureData(IResourceManager resourceManager) {
         try {
             InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("empty.png");
             TextureData texture = null;
 
-            if( input != null ) {
+            if (input != null) {
 
                 try {
                     texture = new TextureData(new TextureMetadataSection(true, true), NativeImage.read(input));

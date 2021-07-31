@@ -3,10 +3,8 @@
   "minVersion": "0.8",
   "package": "com.teammoeg.splashscreenforge.mixin",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [
-    "SplashScreenMixin"
-  ],
   "client": [
+    "SplashScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
