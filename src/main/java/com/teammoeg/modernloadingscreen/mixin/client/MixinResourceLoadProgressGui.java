@@ -148,7 +148,7 @@ public class MixinResourceLoadProgressGui {
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, s); //setShaderColor
             blit(matrices, m - (w / 2), v, w, w, 0, 0, 512, 512, 512, 512);
         } else if (CS_CONFIG.logoStyle.get() == MLSConfig.LogoStyle.Mojang) {
-            RenderSystem.blendFunc(770, 1);
+            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, s); //setShaderColor
             blit(matrices, m - w, u - v, w, (int) d, -0.0625F, 0.0F, 120, 60, 120, 120);
             blit(matrices, m, u - v, w, (int) d, 0.0625F, 60.0F, 120, 60, 120, 120);
