@@ -1,4 +1,4 @@
-package com.teammoeg.splashscreenforge.texture;
+package com.teammoeg.modernloadingscreen.texture;
 
 import net.minecraft.client.renderer.texture.NativeImage;
 import net.minecraft.client.renderer.texture.SimpleTexture;
@@ -10,24 +10,23 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static com.teammoeg.splashscreenforge.SplashScreenForge.CONFIG_PATH;
+import static com.teammoeg.modernloadingscreen.MLS.CONFIG_PATH;
 
-public class ConfigTexture extends SimpleTexture {
+public class BlurredConfigTexture extends SimpleTexture {
     // Load textures from the config directory //
 
-    public ConfigTexture(ResourceLocation location) {
+    public BlurredConfigTexture(ResourceLocation location) {
         super(location);
     }
 
     @Override
     protected TextureData getTextureData(IResourceManager resourceManager) {
         try {
-            System.out.println("TEXTURE_PATH: " + CONFIG_PATH + "/" + this.textureLocation.toString().replace("minecraft:", ""));
             InputStream input = new FileInputStream(CONFIG_PATH + "/" + this.textureLocation.toString().replace("minecraft:", ""));
             TextureData texture;
 
             try {
-                texture = new TextureData(new TextureMetadataSection(false, true), NativeImage.read(input));
+                texture = new TextureData(new TextureMetadataSection(true, true), NativeImage.read(input));
             } finally {
                 input.close();
             }

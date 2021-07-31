@@ -1,4 +1,4 @@
-package com.teammoeg.splashscreenforge;
+package com.teammoeg.modernloadingscreen;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class SplashConfig {
+public class MLSConfig {
     public static class Client {
         public final ForgeConfigSpec.EnumValue<ProgressBarType> progressBarType;
         public final ForgeConfigSpec.EnumValue<LogoStyle> logoStyle;

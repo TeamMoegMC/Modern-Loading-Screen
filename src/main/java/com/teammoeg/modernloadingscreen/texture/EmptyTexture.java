@@ -1,4 +1,4 @@
-package com.teammoeg.splashscreenforge.texture;
+package com.teammoeg.modernloadingscreen.texture;
 
 import net.minecraft.client.renderer.texture.NativeImage;
 import net.minecraft.client.renderer.texture.SimpleTexture;

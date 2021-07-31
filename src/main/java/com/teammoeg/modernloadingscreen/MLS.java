@@ -1,4 +1,4 @@
-package com.teammoeg.splashscreenforge;
+package com.teammoeg.modernloadingscreen;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -25,18 +25,19 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod("splashscreenforge")
-public class SplashScreenForge {
+@Mod(MLS.MODID)
+public class MLS {
 
     // Directly reference a log4j logger.
+    public static final String MODID = "modernloadingscreen";
     private static final Logger LOGGER = LogManager.getLogger();
-    public static File CONFIG_PATH = new File(Minecraft.getInstance().gameDir + "/splashscreenforge");
+    public static File CONFIG_PATH = new File(Minecraft.getInstance().gameDir + "/" + MODID);
 
     public static ResourceLocation rl(String path) {
         return new ResourceLocation(path);
     }
 
-    public SplashScreenForge() {
+    public MLS() {
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register the doClientStuff method for modloading
@@ -46,7 +47,7 @@ public class SplashScreenForge {
         MinecraftForge.EVENT_BUS.register(this);
 
         // Register config
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SplashConfig.CLIENT_CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, MLSConfig.CLIENT_CONFIG);
     }
 
     private void setup(final FMLCommonSetupEvent event) {
@@ -54,9 +55,8 @@ public class SplashScreenForge {
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        LOGGER.info("Customizing Splash Screen");
         // do something that can only be done on the client
-        System.out.println("CONFIG_PATH: " + CONFIG_PATH);
+        LOGGER.info("MLS_CONFIG_PATH: " + CONFIG_PATH);
         Path backgroundTexture = Paths.get(CONFIG_PATH + "/background.png");
         Path mojangTexture = Paths.get(CONFIG_PATH + "/mojangstudios.png");
         Path mojankTexture = Paths.get(CONFIG_PATH + "/mojank.png");

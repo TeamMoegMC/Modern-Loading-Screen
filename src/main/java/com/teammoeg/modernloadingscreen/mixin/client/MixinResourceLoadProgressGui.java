@@ -1,12 +1,12 @@
-package com.teammoeg.splashscreenforge.mixin;
+package com.teammoeg.modernloadingscreen.mixin.client;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.teammoeg.splashscreenforge.SplashConfig;
-import com.teammoeg.splashscreenforge.texture.BlurredConfigTexture;
-import com.teammoeg.splashscreenforge.texture.ConfigTexture;
-import com.teammoeg.splashscreenforge.texture.EmptyTexture;
+import com.teammoeg.modernloadingscreen.MLSConfig;
+import com.teammoeg.modernloadingscreen.texture.BlurredConfigTexture;
+import com.teammoeg.modernloadingscreen.texture.ConfigTexture;
+import com.teammoeg.modernloadingscreen.texture.EmptyTexture;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ResourceLoadProgressGui;
 import net.minecraft.resources.IAsyncReloader;
@@ -24,12 +24,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import static com.teammoeg.splashscreenforge.SplashScreenForge.rl;
+import static com.teammoeg.modernloadingscreen.MLS.rl;
 import static net.minecraft.client.gui.AbstractGui.blit;
 import static net.minecraft.client.gui.AbstractGui.fill;
 
 @Mixin(ResourceLoadProgressGui.class)
-public class SplashScreenMixin {
+public class MixinResourceLoadProgressGui {
 
     @Shadow
     @Final
@@ -53,7 +53,7 @@ public class SplashScreenMixin {
     @Final
     private Consumer<Optional<Throwable>> completedCallback;
 
-    private static final SplashConfig.Client CS_CONFIG = SplashConfig.CLIENT;
+    private static final MLSConfig.Client CS_CONFIG = MLSConfig.CLIENT;
 
     private static final ResourceLocation EMPTY_TEXTURE = rl("empty.png");
     private static final ResourceLocation MOJANG_TEXTURE = rl("mojangstudios.png");
@@ -65,7 +65,7 @@ public class SplashScreenMixin {
 
     @Inject(method = "loadLogoTexture(Lnet/minecraft/client/Minecraft;)V", at = @At("HEAD"), cancellable = true)
     private static void init(Minecraft mc, CallbackInfo ci) { // Load our custom textures at game start //
-        if (CS_CONFIG.logoStyle.get() == SplashConfig.LogoStyle.Mojang) {
+        if (CS_CONFIG.logoStyle.get() == MLSConfig.LogoStyle.Mojang) {
             mc.getTextureManager().loadTexture(MOJANG_LOGO_TEXTURE, new BlurredConfigTexture(MOJANG_TEXTURE));
         } else {
             mc.getTextureManager().loadTexture(MOJANG_LOGO_TEXTURE, new EmptyTexture(EMPTY_TEXTURE));
@@ -140,14 +140,14 @@ public class SplashScreenMixin {
         }
 
         // Render the Logo
-        this.mc.getTextureManager().bindTexture(CS_CONFIG.logoStyle.get() == SplashConfig.LogoStyle.Aspect1to1 ? ASPECT_1to1_TEXTURE : MOJANG_LOGO_TEXTURE);
+        this.mc.getTextureManager().bindTexture(CS_CONFIG.logoStyle.get() == MLSConfig.LogoStyle.Aspect1to1 ? ASPECT_1to1_TEXTURE : MOJANG_LOGO_TEXTURE);
         RenderSystem.enableBlend();
 
-        if (CS_CONFIG.logoStyle.get() == SplashConfig.LogoStyle.Aspect1to1) {
+        if (CS_CONFIG.logoStyle.get() == MLSConfig.LogoStyle.Aspect1to1) {
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, s); //setShaderColor
             blit(matrices, m - (w / 2), v, w, w, 0, 0, 512, 512, 512, 512);
-        } else if (CS_CONFIG.logoStyle.get() == SplashConfig.LogoStyle.Mojang) {
+        } else if (CS_CONFIG.logoStyle.get() == MLSConfig.LogoStyle.Mojang) {
             RenderSystem.blendFunc(770, 1);
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, s); //setShaderColor
             blit(matrices, m - w, u - v, w, (int) d, -0.0625F, 0.0F, 120, 60, 120, 120);
@@ -200,18 +200,18 @@ public class SplashScreenMixin {
         int i = MathHelper.ceil((float) (x2 - x1 - 2) * this.progress);
 
         // Bossbar Progress Bar
-        if (CS_CONFIG.progressBarType.get() == SplashConfig.ProgressBarType.BossBar) {
+        if (CS_CONFIG.progressBarType.get() == MLSConfig.ProgressBarType.BossBar) {
             this.mc.getTextureManager().bindTexture(BOSS_BAR_TEXTURE);
 
             int overlay = 0;
 
-            if (CS_CONFIG.bossBarType.get() == SplashConfig.BossBarType.NOTCHED_6) {
+            if (CS_CONFIG.bossBarType.get() == MLSConfig.BossBarType.NOTCHED_6) {
                 overlay = 93;
-            } else if (CS_CONFIG.bossBarType.get() == SplashConfig.BossBarType.NOTCHED_10) {
+            } else if (CS_CONFIG.bossBarType.get() == MLSConfig.BossBarType.NOTCHED_10) {
                 overlay = 105;
-            } else if (CS_CONFIG.bossBarType.get() == SplashConfig.BossBarType.NOTCHED_12) {
+            } else if (CS_CONFIG.bossBarType.get() == MLSConfig.BossBarType.NOTCHED_12) {
                 overlay = 117;
-            } else if (CS_CONFIG.bossBarType.get() == SplashConfig.BossBarType.NOTCHED_20) {
+            } else if (CS_CONFIG.bossBarType.get() == MLSConfig.BossBarType.NOTCHED_20) {
                 overlay = 129;
             }
 
@@ -231,8 +231,8 @@ public class SplashScreenMixin {
         }
 
         // Custom Progress Bar
-        if (CS_CONFIG.progressBarType.get() == SplashConfig.ProgressBarType.Custom) {
-            int customWidth = CS_CONFIG.customProgressBarMode.get() == SplashConfig.ProgressBarMode.Linear ? x2 - x1 : i;
+        if (CS_CONFIG.progressBarType.get() == MLSConfig.ProgressBarType.Custom) {
+            int customWidth = CS_CONFIG.customProgressBarMode.get() == MLSConfig.ProgressBarMode.Linear ? x2 - x1 : i;
             if (CS_CONFIG.customProgressBarBackground.get()) {
                 this.mc.getTextureManager().bindTexture(CUSTOM_PROGRESS_BAR_BACKGROUND_TEXTURE);
                 blit(matrices, x1, y1, 0, 0, 6, x2 - x1, y2 - y1, 10, x2 - x1);
@@ -242,7 +242,7 @@ public class SplashScreenMixin {
         }
 
         // Vanilla / With Color progress bar
-        if (CS_CONFIG.progressBarType.get() == SplashConfig.ProgressBarType.Vanilla) {
+        if (CS_CONFIG.progressBarType.get() == MLSConfig.ProgressBarType.Vanilla) {
             int j = Math.round(opacity * 255.0F);
             int k = CS_CONFIG.progressBarColor.get() | 255 << 24;
             int kk = CS_CONFIG.progressFrameColor.get() | 255 << 24;

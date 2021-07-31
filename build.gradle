@@ -15,8 +15,8 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
 group = 'com.teammoeg'
-version = '1.0-SNAPSHOT'
-archivesBaseName = 'splashscreenforge'
+version = '1.0.0'
+archivesBaseName = 'modernloadingscreen'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
@@ -29,7 +29,7 @@ minecraft {
 
             workingDirectory project.file('run')
 
-            arg "-mixin.config=" + "splashscreenforge.mixins.json"
+            arg "-mixin.config=" + "modernloadingscreen.mixins.json"
 
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
@@ -38,7 +38,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                splashscreenforge {
+                modernloadingscreen {
                     source sourceSets.main
                 }
             }
@@ -50,7 +50,7 @@ minecraft {
 
             workingDirectory project.file('run')
 
-            arg "-mixin.config=" + "splashscreenforge.mixins.json"
+            arg "-mixin.config=" + "modernloadingscreen.mixins.json"
 
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
@@ -59,7 +59,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                splashscreenforge {
+                modernloadingscreen {
                     source sourceSets.main
                 }
             }
@@ -71,8 +71,8 @@ minecraft {
 
             workingDirectory project.file('run')
 
-            arg "-mixin.config=" + "splashscreenforge.mixins.json"
-            
+            arg "-mixin.config=" + "modernloadingscreen.mixins.json"
+
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
@@ -80,10 +80,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'splashscreenforge', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'modernloadingscreen', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                splashscreenforge {
+                modernloadingscreen {
                     source sourceSets.main
                 }
             }
@@ -102,7 +102,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "Splash Screen Forge",
+                "Specification-Title"     : "Modern Loading Screen",
                 "Specification-Vendor"    : "YueSha",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
