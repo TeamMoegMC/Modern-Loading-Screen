@@ -30,7 +30,7 @@ public class MLS {
 
     // Directly reference a log4j logger.
     public static final String MODID = "modernloadingscreen";
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
     public static File CONFIG_PATH = new File(Minecraft.getInstance().gameDir + "/" + MODID);
 
     public static ResourceLocation rl(String path) {

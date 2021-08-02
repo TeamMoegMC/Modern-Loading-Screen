@@ -15,7 +15,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
 group = 'com.teammoeg'
-version = '1.0.0'
+version = '1.0.1'
 archivesBaseName = 'modernloadingscreen'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
@@ -96,6 +96,9 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.2'
+
+    annotationProcessor "org.spongepowered:mixin:0.8.2:processor"
+    testAnnotationProcessor "org.spongepowered:mixin:0.8.2:processor"
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -108,7 +111,8 @@ jar {
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.version,
                 "Implementation-Vendor"   : "YueSha",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "MixinConfigs": "modernloadingscreen.mixins.json"
         ])
     }
 }
